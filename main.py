@@ -7,6 +7,7 @@ app = Flask("__name__")
 stations = pd.read_csv("data_small/stations.txt", skiprows=17)
 stations = stations[["STAID", "STANAME                                 "]]
 
+
 @app.route("/")
 def home():
     return render_template("home.html", data=stations.to_html())
@@ -35,6 +36,7 @@ def station_all(station):
     else:
         return "<h3>Enter a valid station ID.</h3>"
 
+
 @app.route("/api/v1/yearly/<station>/<date>")
 def by_year(station, date):
     filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
@@ -45,6 +47,7 @@ def by_year(station, date):
         return df[df["    DATE"].str.startswith(date)].to_dict(orient="records")
     else:
         return "<h3>Enter a valid station ID.</h3>"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
