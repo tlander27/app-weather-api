@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather Data API</title>
+    <title>European Weather Data API</title>
 </head>
+
 <body>
-    <h1>Weather Data API</h1>
-    <p>URL format: http://127.0.0.1:5000/api/v1/station/date</p>
-    <p>URL example: http://127.0.0.1:5000/api/v1/10/1988-10-25</p>
+    <div>
+        <h1>European Weather Data API</h1>
+        <p>URL format: http://127.0.0.1:5000/api/v1/station/date</p>
+        <p>URL - results by station and date: http://127.0.0.1:5000/api/v1/10/1988-10-25</p>
+        <p>URL - results by station and year: http://127.0.0.1:5000/api/v1/10/1988</p>
+        <p>URL - results by station: http://127.0.0.1:5000/api/v1/10</p>
+    </div>
     <br>
-    {{data|safe}}
+    <div>
+        {{data|safe}}
+    </div>
 </body>
 </html>

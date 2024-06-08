@@ -25,5 +25,26 @@ def about(station, date):
         return "<h3>Enter a valid station ID.</h3>"
 
 
+@app.route("/api/v1/<station>")
+def station_all(station):
+    filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
+    if os.path.exists(filename):
+        df = pd.read_csv(filename, skiprows=20)
+        df["   TG"] = df["   TG"] / 10
+        return df.to_dict(orient="records")
+    else:
+        return "<h3>Enter a valid station ID.</h3>"
+
+@app.route("/api/v1/yearly/<station>/<date>")
+def by_year(station, date):
+    filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
+    if os.path.exists(filename):
+        df = pd.read_csv(filename, skiprows=20)
+        df["   TG"] = df["   TG"] / 10
+        df["    DATE"] = df["    DATE"].astype(str)
+        return df[df["    DATE"].str.startswith(date)].to_dict(orient="records")
+    else:
+        return "<h3>Enter a valid station ID.</h3>"
+
 if __name__ == "__main__":
     app.run(debug=True)
