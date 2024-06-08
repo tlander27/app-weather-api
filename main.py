@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import pandas as pd
+import os
 
 app = Flask("__name__")
 
@@ -11,10 +12,15 @@ def home():
 
 @app.route("/api/v1/<station>/<date>")
 def about(station, date):
-    temperature = 23
-    return {"station": station,
-            "date": date,
-            "temperature": temperature}
+    filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
+    if os.path.exists(filename):
+        df = pd.read_csv(filename, skiprows=20, parse_dates=["    DATE"])
+        temperature = df.loc[df["    DATE"] == date]["   TG"].squeeze() / 10
+        return {"station": station,
+                "date": date,
+                "temperature": temperature}
+    else:
+        return "<h3>Enter a valid station ID.</h3>"
 
 
 if __name__ == "__main__":
